@@ -29,7 +29,7 @@ public class OrderDetailsController {
 
     @GetMapping("/{orderNumber}")
     public ResponseEntity<orderdetails> getOrderDetailsById(@PathVariable Integer orderNumber) {
-        List<orderdetails> orderDetailsList = orderDetailsRepository.findByOrderNumber(orderNumber);
+        List<orderdetails> orderDetailsList = orderDetailsRepository.findByOrderdetailsIdOrderNumber(orderNumber);
 
         if (orderDetailsList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
