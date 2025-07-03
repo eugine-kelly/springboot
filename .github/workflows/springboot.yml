@@ -21,21 +21,18 @@ jobs:
           distribution: 'temurin'  # Options: temurin, zulu, corretto
           java-version: '21'
 
-      - name: Cache Maven dependencies
+      - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: |
-            ~/.m2/repository
+            ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
       - name: Build with Maven
-        run: mvn -B clean verify
+        run: mvn clean install -DskipTests=false
 
-      - name: Upload JAR artifact (optional)
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: springboot-app
-          path: target/*.jar
+      - name: Run tests
+        run: mvn test
+
